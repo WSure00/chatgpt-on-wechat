@@ -200,11 +200,15 @@ class ChatChannel(Channel):
                 if context.type == ContextType.TEXT and conf().get("enable_web", False):
                     url_pattern = re.compile(r'https?://\S+')
                     matches = url_pattern.findall(str(context.content))
-                    for url in matches:
-                        self.web_scraper = WebScraper()
-                        logger.info("[WEB_SCRAPER] Fetching content from URL: {}".format(url))
-                        web_content = self.web_scraper.get_content(url)
-                        context.content += "\n以下是链接 {} 的内容:\n{}".format(url, web_content)
+                    if matches:
+                        try:
+                            self.web_scraper = WebScraper()
+                            for url in matches:
+                                logger.info(f"[WEB_SCRAPER] Fetching content from URL: {url}")
+                                web_content = self.web_scraper.get_content(url)
+                                context.content += f"\n以下是链接 {url} 的内容:\n{web_content}"
+                        finally:
+                            self.web_scraper.close()
                 context["channel"] = e_context["channel"]
                 reply = super().build_reply_content(context.content, context)
             elif context.type == ContextType.VOICE:  # 语音消息
