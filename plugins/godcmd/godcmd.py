@@ -133,7 +133,7 @@ ADMIN_COMMANDS = {
     },
     "admin_set_openai_api_base": {
         "alias": ["admin_set_openai_api_base"],
-        "args": ["api_key"],
+        "args": ["api_base"],
         "desc": "全局设置OpenAI的api_base",
     },
     "admin_set_openai_api_key": {
