@@ -77,7 +77,6 @@ class ChatChannel(Channel):
                         ]
                     ):
                         session_id = group_id
-                        logger.info(f"Group chat in one session, group_name={group_name}, group_id={group_id}")
                 else:
                     logger.debug(f"No need reply, groupName not in whitelist, group_name={group_name}")
                     return None
